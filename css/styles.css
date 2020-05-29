@@ -16,21 +16,29 @@ ul {
 .gameBoard {
     border: 2rem solid aliceblue;
     border-radius: 1rem;
+    margin-top: 3rem;;
     margin-left: auto;
     margin-right: auto;
     padding: 1rem;
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
-    /* display: grid;
+    justify-content: space-between; */
+    /* display: grid; */
     grid-template-columns: repeat(4, 25%);
     justify-items: center;
-    align-items: center; */
+    align-items: center;
     perspective: 1000px;
 }
 .card {
-    width: max-content;
+
+    /* -webkit-transition: -webkit-transform 1s;
+    -moz-transition: -moz-transform 1s;
+    -o-transition: -o-transform 1s; */
+    transition: transform 1s;
+    transform-origin: 50% 50%;
+    -webkit-transform-origin: 50% 50%;
+
     border: .5rem solid rgb(255, 177, 76);
     border-radius: .8rem;
     padding: .5rem;
@@ -39,20 +47,54 @@ ul {
     transition: transform .5s;
     transform: scale(1.0);
     /* transform: rotateY(180deg); */
+
+    
+}
+.card div {
+    backface-visibility: hidden;
 }
 
 .card:hover {
-    border: .5rem solid rgb(255, 118, 77);
+    border: .5rem solid #2196F3;
     transition: ease-in 0.5s;
-
 }
 
-.card:active {
-    transform: scale(.9)
-              rotateY(180deg);
-    transform: rotateY(180deg);
-    transition: transform .3s;
-}
+
+  /* .card .back {
+        background-color: rgb(13, 77, 147);
+        -webkit-transform: rotateY( 180deg );
+        -moz-transform: rotateY( 180deg );
+        -o-transform: rotateY( 180deg );
+      transform: rotateY( 180deg );
+  } */
+  .card.flipped {
+      -webkit-transform: rotateY( 180deg );
+      -moz-transform: rotateY( 180deg );
+      -o-transform: rotateY( 180deg );
+      transform: rotateY( 180deg );
+  }
+  .match {
+      border: 0.5rem solid hsl(89, 64%, 81%);
+      /* transform: rotateY( 180deg ); */
+  }
+  .unmatched {
+    border: .5rem solid khaki;
+    transition: ease-in 0.5s;
+    /* transform: rotateY( 180deg ); */
+    pointer-events: none;
+	/* opacity: 0.9; */
+  }
+  .btn {
+    border-width: 0.5rem;
+    padding: .5rem;
+    font-family: monospace;
+    margin-top: .5rem;
+    background-color: aliceblue;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: tomato;
+  }
+
 .turnIt {
     animation: turn 1s ease;
 }
@@ -69,6 +111,12 @@ ul {
     width: 48px;
     height: 48px;
 }
+
+ .card.disabled {
+	pointer-events: none;
+	opacity: 0.9;
+}
+
 input {
     display: block;
     width: auto;
@@ -77,3 +125,55 @@ input {
     border: 1rem solid aliceblue;
     border-radius: .7rem;
 }
+.overlay {
+    text-align: center;
+    display: flex;
+}
+.hidden {
+    visibility: hidden;
+}
+.modal {
+
+    border: 1rem solid peachpuff;
+    padding: 2rem;
+    z-index: 1000;
+    border-radius: .5rem;
+    width: 350px;
+    margin: 15% auto auto;
+    position: fixed;
+    text-align: center;
+    background: white;
+    left: 5%;
+    right: 5%;
+    bottom: 50%;
+}
+.modal p{
+    font-family: monospace;
+    font-size: 1.5rem;
+}
+.close {
+    cursor: pointer;
+    /* padding: 4px;
+    position: relative;
+    left: 150px; */
+
+    position: absolute;
+    right: 2%;
+    top: 1%;
+  }
+.modal-close button {
+    position: absolute;
+    right: 2%;
+    top: 1%;
+  }
+  #counter {
+    text-align: center;
+    margin: 2rem;
+    border: 3px dotted darkorange;
+    /* display: inline-block; */
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem;
+    visibility: hidden;
+  }
