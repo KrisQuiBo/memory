@@ -1,7 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Alatsi&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Alatsi', sans-serif;
+}
+body {
+    height: 100vh;
 }
 
 ul {
@@ -87,7 +93,6 @@ ul {
   .btn {
     border-width: 0.5rem;
     padding: .5rem;
-    font-family: monospace;
     margin-top: .5rem;
     background-color: aliceblue;
     font-weight: 600;
@@ -105,9 +110,7 @@ ul {
     }
 }
 
-
 .front {
-    /* background-image: radial-gradient(aliceblue, rgb(77, 114, 119)); */
     width: 48px;
     height: 48px;
 }
@@ -125,6 +128,7 @@ input {
     border: 1rem solid aliceblue;
     border-radius: .7rem;
 }
+
 .overlay {
     text-align: center;
     display: flex;
@@ -133,7 +137,6 @@ input {
     visibility: hidden;
 }
 .modal {
-
     border: 1rem solid peachpuff;
     padding: 2rem;
     z-index: 1000;
@@ -147,16 +150,15 @@ input {
     right: 5%;
     bottom: 50%;
 }
-.modal p{
-    font-family: monospace;
-    font-size: 1.5rem;
+.modal-content {
+    display: flex;
+}
+.modal p {
+    font-size: 1.7rem;
 }
 .close {
+    font-size: 2rem;
     cursor: pointer;
-    /* padding: 4px;
-    position: relative;
-    left: 150px; */
-
     position: absolute;
     right: 2%;
     top: 1%;
@@ -169,11 +171,13 @@ input {
   #counter {
     text-align: center;
     margin: 2rem;
-    border: 3px dotted darkorange;
-    /* display: inline-block; */
-    width: 25%;
+    border-bottom: 11px solid aliceblue;
+    width: 5%;
     margin-left: auto;
     margin-right: auto;
-    padding: 1rem;
+    padding: .5rem;
+    border-radius: .5rem;
+    font-size: 1.4rem;
     visibility: hidden;
+    display: table;
   }

@@ -3,7 +3,7 @@
 //   cardOne is clicked = true
 // click card #2 to reveal icon ->
 //   cardTwo is clicked = true
-// diable other clicks
+// disable other clicks
 // check for match. Does card#1 icon === card#2 icon?
 // yes => cards stay revealed -> 
 // add match class 
@@ -33,7 +33,7 @@ $(document).ready(function(){
 
     $('.card').addClass('flipped');
     
-    // define shuffle
+    // define shuffle -- from James Padolsey
     (function($){
         $.fn.shuffle = function() {
             var allElems = this.get(),
@@ -54,88 +54,76 @@ $(document).ready(function(){
     })(jQuery);
 
     // Shuffle the cards
-    $('.card').shuffle();
+    $cards.shuffle();
 
+    
     // flip card and flip it back
     function flipCard() {
-        // this.classList.toggle('flipped');
         if(disableDeck) return;
-
-        if (this === firstCard) return;
-
-        this.classList.toggle('flipped');
+        if(this===firstCard) return;
+        this.classList.remove('flipped');
     
         if (!cardFlipped) {
           cardFlipped = true;
           firstCard = this;
           clickedOn.push(this);
-
+          
           return;
         }
     
         secondCard = this;
         cardFlipped = false;
-        clickedOn.push(this);
+        disableCard();
+        // clickedOn.push(this);
         
         checkForMatch();
         
         }
 
-        // let self = this; 
-
         function checkForMatch() {
-            let length = clickedOn.length;
-            
-        if(length == 2) {
-    
-            console.log(firstCard.dataset.icon);
-            console.log(secondCard.dataset.icon);
             let isMatch = firstCard.dataset.icon === secondCard.dataset.icon;
-            if(isMatch) {
-                matched();
-                disableCard();
-            } else {
-                unmatched();
-            }
-            // isMatch ? matched() : unmatched();
+            isMatch ? matched() : unmatched();
             checkForWin();
-          }
-    }
+        // }
+        }
+    
+    $('.card').on('click', flipCard);
 
 
     const matched = () => {
-       clickedOn[0].classList.add('match');
-       clickedOn[1].classList.add('match');
-       matchArray.push(clickedOn[0]);
-       matchArray.push(clickedOn[1]);
+       firstCard.classList.add('match');
+       secondCard.classList.add('match');
+       matchArray.push(firstCard);
+       matchArray.push(secondCard);
        pairs++;
+       disableCard();
        counterAdd() 
-       clickedOn = [];
        return;
     }
 
+
     const unmatched = () => {
-        clickedOn[0].classList.add('unmatched');
-        clickedOn[1].classList.add('unmatched');
         disableDeck = true;
-        setTimeout(function() {
-            clickedOn[0].classList.remove('unmatched');
-        clickedOn[1].classList.remove('unmatched');
-            clickedOn[0].classList.toggle('flipped');
-            clickedOn[1].classList.toggle('flipped');
-            clickedOn = [];
+        firstCard.classList.add('unmatched');
+        secondCard.classList.add('unmatched');
+        $('.card').each(function() {
+            $('card').off('click');
+        });
+         setTimeout(function() {
+            firstCard.classList.remove('unmatched');
+            secondCard.classList.remove('unmatched');
+            firstCard.classList.toggle('flipped');
+            secondCard.classList.toggle('flipped');
             disableDeck = false;
-        }, 1000);
+        }, 800);
         
     }
 
-    const enableCards = () => {
-        $('.match').on('click');
-    }
+    
     const disableCard = () => {
-        firstCard.removeEventListener('click', flipCard);
-        secondCard.removeEventListener('click', flipCard);
-        // $('.match').off('click');
+        // firstCard.removeEventListener('click', flipCard);
+        // secondCard.removeEventListener('click', flipCard);
+        $('.match').off('click');
         return
     }
 
@@ -143,25 +131,29 @@ $(document).ready(function(){
         if(matchArray.length==16) {
             $('div.overlay').removeClass('hidden');
         }
-        $('.close').on('click', function() {
-            $('div.overlay').addClass('hidden');
-        });
     }
+    $('.close').on('click', function() {
+        $('div.overlay').addClass('hidden');
+    });
     
     const restart = () => {
+
         $('.card').shuffle();
         $('.card').addClass('flipped');
         $('.card').removeClass('match');
-        counter.style.visibility = "hidden";
-        [firstCard, secondCard] = [null, null];
-        enableCards();
+        // // counter.style.visibility = "hidden";
+        // // $('div.overlay').addClass('hidden');
+        // // [firstCard, secondCard] = [null, null];
+        // // enableCards();
+       
         pairs = 0;
         matchArray = [];
-        // clickedOn = [];
         clearCounter();
-        cardFlipped = false;
-        disableDeck = false;
-        isMatch = false;
+        // cardFlipped = false;
+        disableDeck = false; 
+        // isMatch = false;
+        $('.card').on('click', flipCard);
+        return
     }
 
     $('.btn').on('click', restart);
@@ -177,99 +169,6 @@ $(document).ready(function(){
         pairs = 0;
     }
 
-    $('.card').on('click', flipCard);
+    
 
 });
-
-
-
-
-//
-    // shuffle prototype or function options
-    //
-
-        // Array.prototype.shuffle = function() {
-        //     var i = this.length, j, temp;
-        //     while(--i >0) {
-        //         j = Math.floor(Math.random() * (i+1));
-        //         temp = this[j];
-        //         this[j] = this[i];
-        //         this[i] = temp;
-        //     }
-        //     return this;
-        // }
-
-
-
-        //
-        //
-        // trying to assign firstcard and secondcard
-        //
-        //
-                // clicks++;
-
-                // if (!isClicked) {
-                //     isClicked = true;
-                //     firstCard = this;
-                //     console.log(firstCard);
-                //     return;
-                //   }
-                
-                // if(clicks==2) {
-                //     // isClicked = true;
-                //     $('.card').off('click');
-                //     // for(let i = 0; i < clicks.length; i++) {
-                //     // setTimeout(function() {
-                //     //     $(e.target).closest('.card').toggleClass('flipped');
-                //     //     }, 1700);
-                //     // }
-                
-                //       secondCard = this;
-                //       isClicked = false;
-                //     return clicks;  
-                // }
-
-                // function checkForMatch(card) {
-        //     console.log(self);
-        //      clickedOn.push(self);
-        //      let length = clickedOn.length;
-            
-        //      if(length == 2) {
-        //          if(clickedOn[0].dataset.icon === clickedOn[1].dataset.icon) {
-        //              // if(firstCard.type === secondCard.type) {
-        //              matched();
-        //              disableCard();
-        //          } else {
-        //              unmatched();
-        //          }
-        //      }
-        //      checkForWin();   
-        //  }
-        //  return checkForMatch(this);
-
-            // const flip = (e) => {
-    //     $(e.target).closest('.card').removeClass('flipped');
-    // }
-
-        
-    //   checking for a match
-    // function checkForMatch(card) {
-    //    console.log(this);
-    //     clickedOn.push(this);
-    //     let length = clickedOn.length;
-    //     // if(clickedOn[0]=clickedOn[1]) {
-            
-    //     // }
-    //     if(length == 2) {
-    
-    //         if(clickedOn[0].dataset.icon === clickedOn[1].dataset.icon) {
-    //             // if(firstCard.type === secondCard.type) {
-    //             matched();
-    //             disableCard();
-               
-    //         } else {
-    //             unmatched();
-    //         }
-    //     }
-    //     checkForWin();   
-    // }
