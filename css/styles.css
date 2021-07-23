@@ -95,9 +95,10 @@ ul {
     padding: .5rem;
     margin-top: .5rem;
     background-color: aliceblue;
+    text-transform: uppercase;
     font-weight: 600;
-    font-size: 1.2rem;
-    color: tomato;
+    font-size: 2rem;
+    /* color: tomato; */
   }
 
 .turnIt {
@@ -171,13 +172,19 @@ input {
   #counter {
     text-align: center;
     margin: 2rem;
-    border-bottom: 11px solid aliceblue;
+    border: 11px solid aliceblue;
     width: 5%;
     margin-left: auto;
     margin-right: auto;
     padding: .5rem;
     border-radius: .5rem;
-    font-size: 1.4rem;
+    font-size: 2rem;
     visibility: hidden;
     display: table;
+  }
+
+  @media only screen and (max-width: 768px) {
+      .container {
+          width: 100%;
+      }
   }
